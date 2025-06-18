@@ -9,9 +9,12 @@
     <ion-row>
       <ion-col size="6" *ngFor="let p of pokemons">
         <ion-card (click)="goToDetails(p.id)">
-          <img [src]="p.sprites.front_default"/>
+          <img [src]="p.sprites.front_default" />
           <ion-card-header>
-            <ion-card-title>{{p.name | titlecase}}</ion-card-title>
+            <ion-card-title>{{ p.name | titlecase }}</ion-card-title>
+            <ion-button fill="clear" (click)="toggleFavorite(p); $event.stopPropagation()">
+              <ion-icon slot="icon-only" [name]="isFav(p.id) ? 'heart' : 'heart-outline'"></ion-icon>
+            </ion-button>
           </ion-card-header>
         </ion-card>
       </ion-col>

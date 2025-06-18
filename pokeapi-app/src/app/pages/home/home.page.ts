@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonButton } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard, 
+  IonCardTitle, IonButton, IonIcon, IonCardHeader } from '@ionic/angular/standalone';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Router } from '@angular/router';
 import { CommonModule, TitleCasePipe } from '@angular/common';
+import { FavoritesService } from 'src/app/services/favorites.service';
 
 @Component({
   selector: 'app-home',
@@ -11,14 +13,18 @@ import { CommonModule, TitleCasePipe } from '@angular/common';
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent,
     IonGrid, IonRow, IonCol, IonCard, CommonModule, TitleCasePipe,
-    IonCardHeader, IonCardTitle, IonButton],
+    IonCardTitle, IonButton, IonIcon, IonCardHeader],
 })
 export class HomePage implements OnInit {
   pokemons: any[] = [];
   offset = 0;
   limit = 20;
 
-  constructor(private pokemonService: PokemonService, private router: Router) { }
+  constructor(
+    private pokemonService: PokemonService, 
+    private router: Router,
+    public favoriteService: FavoritesService
+  ) { }
 
   ngOnInit(): void {
     this.loadPokemons();
@@ -42,5 +48,13 @@ export class HomePage implements OnInit {
 
   goToDetails(id: Number) {
     this.router.navigate(['/details', id]);
+  }
+
+  isFav(id: number): boolean {
+  return this.favoriteService.isFavorite(id);
+}
+
+  toggleFavorite(pokemon: any) {
+    this.favoriteService.toggleFavorite(pokemon);
   }
 }

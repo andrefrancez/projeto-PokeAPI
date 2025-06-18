@@ -8,9 +8,14 @@
   <ion-card>
     <img [src]="pokemon.sprites.front_default" />
     <img [src]="pokemon.sprites.back_default" />
-    <img [src]="pokemon.sprites.front_shiny"/>
+    <img [src]="pokemon.sprites.front_shiny" />
     <ion-card-header>
       <ion-card-title>ID: {{pokemon.id}}</ion-card-title>
+      <ion-buttons>
+        <ion-button (click)="toggleFavorite()">
+          <ion-icon slot="icon-only" [name]="isFav ? 'heart' : 'heart-outline'"></ion-icon>
+        </ion-button>
+      </ion-buttons>
       <ion-card-subtitle>Altura: {{pokemon.height}} | Peso: {{pokemon.weight}}</ion-card-subtitle>
     </ion-card-header>
 
