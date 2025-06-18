@@ -1,20 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonButton } from '@ionic/angular/standalone';
+import { PokemonService } from 'src/app/services/pokemon.service';
+import { Router } from '@angular/router';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent,
+    IonGrid, IonRow, IonCol, IonCard, CommonModule, TitleCasePipe,
+    IonCardHeader, IonCardTitle, IonButton],
 })
 export class HomePage implements OnInit {
+  pokemons: any[] = [];
+  offset = 0;
+  limit = 20;
 
-  constructor() { }
+  constructor(private pokemonService: PokemonService, private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadPokemons();
   }
 
+  loadPokemons() {
+    this.pokemonService.getPokemonList(this.limit, this.offset).subscribe((res: any) => {
+      this.pokemons = res;
+    });
+  }
+
+  nextPage() {
+    this.offset += this.limit;
+    this.loadPokemons();
+  }
+
+  previousPage() {
+    this.offset -= this.limit;
+    this.loadPokemons();
+  }
+
+  goToDetails(id: Number) {
+    this.router.navigate(['/details', id]);
+  }
 }
