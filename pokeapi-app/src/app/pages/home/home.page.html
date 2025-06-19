@@ -5,6 +5,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-searchbar
+    placeholder="Buscar"
+    [(ngModel)]="searchTerm"
+    (ionInput)="filterPokemons()"
+    debounce="300">
+  </ion-searchbar>
+</ion-content>
+
+<ion-content [fullscreen]="true">
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let p of pokemons">

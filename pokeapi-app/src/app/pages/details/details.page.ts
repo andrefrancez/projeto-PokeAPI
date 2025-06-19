@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, 
-  IonCardTitle, IonCardSubtitle, IonCardContent, IonChip, IonList, IonItem, IonButton, IonIcon, IonButtons  } from '@ionic/angular/standalone';
+import {
+  IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader,
+  IonCardTitle, IonCardSubtitle, IonCardContent, IonChip, IonList, IonItem, IonButton, IonIcon, IonButtons
+} from '@ionic/angular/standalone';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { ActivatedRoute } from '@angular/router';
 import { FavoritesService } from 'src/app/services/favorites.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -23,23 +26,42 @@ export class DetailsPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private pokemonService: PokemonService,
-    private favoriteService: FavoritesService
+    private favoriteService: FavoritesService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.pokemonService.getPokemonById(this.id).subscribe((data) => {
-      this.pokemon = data;
-      this.isFav = this.favoriteService.isFavorite(data.id)
+    this.route.paramMap.subscribe(params => {
+      this.id = Number(params.get('id'));
+      this.loadPokemon();
     });
   }
-  
-  checkFavorite(){
+
+  checkFavorite() {
     this.isFav = this.favoriteService.isFavorite(this.pokemon.id);
   }
 
-  toggleFavorite(){
+  toggleFavorite() {
     this.favoriteService.toggleFavorite(this.pokemon);
     this.checkFavorite();
+  }
+
+  goNext() {
+    const nextId = this.pokemon.id + 1;
+    this.router.navigate(['/details', nextId]);
+  }
+
+  goPrevious() {
+    const prevId = this.pokemon.id - 1;
+    if (prevId > 0) {
+      this.router.navigate(['/details', prevId]);
+    }
+  }
+
+  loadPokemon() {
+    this.pokemonService.getPokemonById(this.id).subscribe((data) => {
+      this.pokemon = data;
+      this.isFav = this.favoriteService.isFavorite(data.id);
+    });
   }
 }

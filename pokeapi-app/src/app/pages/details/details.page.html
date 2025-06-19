@@ -10,7 +10,13 @@
     <img [src]="pokemon.sprites.back_default" />
     <img [src]="pokemon.sprites.front_shiny" />
     <ion-card-header>
+      <div class="ion-padding ion-text-center">
+        <ion-button (click)="goPrevious()" color="medium">← Anterior</ion-button>
+      </div>
       <ion-card-title>ID: {{pokemon.id}}</ion-card-title>
+      <div class="ion-padding ion-text-center">
+        <ion-button (click)="goNext()" color="medium">Próximo →</ion-button>
+      </div>
       <ion-buttons>
         <ion-button (click)="toggleFavorite()">
           <ion-icon slot="icon-only" [name]="isFav ? 'heart' : 'heart-outline'"></ion-icon>

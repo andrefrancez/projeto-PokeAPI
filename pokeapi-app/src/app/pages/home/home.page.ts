@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard, 
-  IonCardTitle, IonButton, IonIcon, IonCardHeader } from '@ionic/angular/standalone';
+import {
+  IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard,
+  IonCardTitle, IonButton, IonIcon, IonCardHeader, IonSearchbar, IonFooter
+} from '@ionic/angular/standalone';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Router } from '@angular/router';
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { FavoritesService } from 'src/app/services/favorites.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -12,16 +15,18 @@ import { FavoritesService } from 'src/app/services/favorites.service';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent,
-    IonGrid, IonRow, IonCol, IonCard, CommonModule, TitleCasePipe,
-    IonCardTitle, IonButton, IonIcon, IonCardHeader],
+    IonGrid, IonRow, IonCol, IonCard, CommonModule, TitleCasePipe, IonFooter,
+    IonCardTitle, IonButton, IonIcon, IonCardHeader, IonSearchbar, FormsModule],
 })
 export class HomePage implements OnInit {
   pokemons: any[] = [];
   offset = 0;
   limit = 20;
+  searchTerm: string = '';
+  filteredPoke: any[] = [];
 
   constructor(
-    private pokemonService: PokemonService, 
+    private pokemonService: PokemonService,
     private router: Router,
     public favoriteService: FavoritesService
   ) { }
@@ -33,6 +38,7 @@ export class HomePage implements OnInit {
   loadPokemons() {
     this.pokemonService.getPokemonList(this.limit, this.offset).subscribe((res: any) => {
       this.pokemons = res;
+      this.filterPokemons();
     });
   }
 
@@ -51,10 +57,15 @@ export class HomePage implements OnInit {
   }
 
   isFav(id: number): boolean {
-  return this.favoriteService.isFavorite(id);
-}
+    return this.favoriteService.isFavorite(id);
+  }
 
   toggleFavorite(pokemon: any) {
     this.favoriteService.toggleFavorite(pokemon);
+  }
+
+  filterPokemons() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredPoke = this.pokemons.filter(p => p.name.toLowerCase().includes(term));
   }
 }
