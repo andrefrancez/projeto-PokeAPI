@@ -1,6 +1,103 @@
-ion-card img {
-    width: 100%;
-    max-width: 200px;
-    margin: auto;
-    display: block;
+.poke-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  
+  .poke-name {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--ion-color-dark);
+  }
+  
+  .poke-id {
+    font-size: 1.2rem;
+    color: var(--ion-color-medium);
+    font-weight: bold;
+  }
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 18px;
+  
+  ion-button {
+    width: 50%;
+    
+    &.next-button {
+      text-align: right;
+    }
+  }
+}
+
+ion-card {
+  border-radius: var(--card-border-radius);
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
+  ion-card-header {
+    padding-bottom: 0;
+    
+    ion-card-title {
+      font-size: 1.2rem;
+      color: var(--ion-color-tertiary);
+    }
+  }
+  
+  ion-card-content {
+    padding-top: 8px;
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    
+    ion-icon {
+      margin-right: 8px;
+      color: var(--ion-color-tertiary);
+    }
+  }
+}
+
+.sprite-card {
+  ion-grid {
+    padding: 0;
+  }
+  
+  .sprite-col {
+    padding: 8px;
+  }
+  
+  .sprite-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--ion-color-light-tint);
+    border-radius: 8px;
+    padding: 12px;
+    height: 100%;
+    
+    img {
+      width: 100%;
+      max-width: 180px;
+      height: auto;
+      object-fit: contain;
+    }
+    
+    .sprite-label {
+      margin-top: 8px;
+      margin-bottom: 0;
+      font-size: 0.8rem;
+      color: var(--ion-color-medium);
+      text-align: center;
+    }
+  }
 }

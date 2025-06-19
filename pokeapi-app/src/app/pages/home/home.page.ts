@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard,
-  IonCardTitle, IonButton, IonIcon, IonCardHeader, IonSearchbar, IonFooter
+  IonCardTitle, IonButton, IonButtons, IonIcon, IonCardHeader, IonSearchbar, IonFooter
 } from '@ionic/angular/standalone';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Router } from '@angular/router';
@@ -14,14 +14,13 @@ import { FormsModule } from '@angular/forms';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent,
-    IonGrid, IonRow, IonCol, IonCard, CommonModule, TitleCasePipe, IonFooter,
-    IonCardTitle, IonButton, IonIcon, IonCardHeader, IonSearchbar, FormsModule],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard,
+  IonCardTitle, IonButton, IonButtons, IonIcon, IonCardHeader, IonSearchbar, IonFooter, FormsModule, CommonModule, TitleCasePipe],
 })
 export class HomePage implements OnInit {
   pokemons: any[] = [];
   offset = 0;
-  limit = 20;
+  limit = 21;
   searchTerm: string = '';
   filteredPoke: any[] = [];
 
